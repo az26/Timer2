@@ -17,4 +17,31 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="timerstyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textOn">"00:00:00"</item>
+        <item name="android:textOff">"00:00"</item>
+        <item name="android:textSize">100dp</item>
+        <item name="android:background">@color/colorTP</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="buttonstyle">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="totalTextstyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">"Total 00:00:00"</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+
 </resources>

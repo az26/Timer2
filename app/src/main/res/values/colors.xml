@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorTP">#00000000</color>
+    <color name="colorBlack">#ff000000</color>
+    <color name="timerfalse">#1fffffff</color>
+    <color name="cTimer">#cfffffff</color>
+    <color name="dTimer">#ffff0000</color>
+    <color name="colorWhite">#ffffffff</color>
 </resources>
