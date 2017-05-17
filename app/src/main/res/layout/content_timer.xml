@@ -10,9 +10,31 @@
     tools:showIn="@layout/activity_timer"
     android:orientation="vertical">
 
+
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/textstyle"
+            android:id="@+id/ttext"
+            android:layout_centerInParent="true"
+            android:text="Total " />
+
+        <TextView
+            style="@style/textstyle"
+            android:id="@+id/total"
+            android:layout_toRightOf="@id/ttext"
+            android:layout_centerVertical="true"
+            android:text="00:00:00" />
+
+        <TextView
+            style="@style/textstyle"
+            android:id="@+id/percentage"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/ttext"
+            android:text="100 %" />
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="wrap_content"
