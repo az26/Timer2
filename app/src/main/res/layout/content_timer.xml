@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.abe.timer2.TimerActivity"
-    tools:showIn="@layout/activity_timer"
     android:orientation="vertical">
 
 
@@ -68,7 +67,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ToggleButton
-            style="@style/buttonstyle"/>
+            style="@style/buttonstyle"
+            android:id="@+id/startButton"/>
     </RelativeLayout>
 
     <RelativeLayout

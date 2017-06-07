@@ -5,8 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import java.sql.Time;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TimerActivity extends AppCompatActivity {
+    private Timer timer = new Timer();
+    private long total,cCount,dCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +25,37 @@ public class TimerActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ToggleButton cTimer = (ToggleButton) findViewById(R.id.cTimer);
+        ToggleButton dTimer = (ToggleButton) findViewById(R.id.dTimer);
+        ToggleButton startBtn = (ToggleButton) findViewById(R.id.startButton);
+
+        dTimer.setEnabled(false);
+        dCount= 50000;
+        cCount = 0;
+        total = 0;
+
+        startBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    if(cCount >= 1){
+                        timer.cancel();
+                        timer = new Timer();
+                    }
+                    //Toast.makeText(TimerActivity.this, "enabled", Toast.LENGTH_SHORT).show();
+                    timer.schedule(new CountUpTimerC(TimerActivity.this, total, cCount),0,100);
+                } else {
+                    // The toggle is disabled
+                    timer.cancel();
+                    timer = new Timer();
+                    //Toast.makeText(TimerActivity.this, "disabled", Toast.LENGTH_SHORT).show();
+                    timer.schedule(new CountUpTimerD(TimerActivity.this, total, dCount),0,100);
+                    cCount = 1;
+                }
+            }
+        });
 
         //CountUpTimerC cut = new CountUpTimerC(this);
 
@@ -31,6 +71,10 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
         */
+    }
+
+    public void test(){
+        timer.schedule(new CountUpTimerC(TimerActivity.this, total, cCount),0,100);
     }
 
     @Override

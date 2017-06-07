@@ -1,10 +1,12 @@
 package com.abe.timer2;
 
 import android.content.Context;
+import android.os.Handler;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.sql.Time;
+import java.util.Timer;
 import java.util.TimerTask;
 
 /**
@@ -16,6 +18,8 @@ public class CountUpTimerC extends TimerTask{
     protected TextView percentageText, totalText;
     protected ToggleButton timerButton;
     protected long total, count;
+    protected Handler handler = new Handler();
+
 
 
     public CountUpTimerC(Context context, long total, long count){
@@ -30,18 +34,28 @@ public class CountUpTimerC extends TimerTask{
 
     @Override
     public void run() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                count();
+                long p = (count*100)/(count+total);
+                percentageText.setText(String.format("%d %%",p));
+            }
+        });
+
 
     }
 
     public void count(){
         count++;
-        hh = count/36000;
-        mm = (count%36000)/600;
-        ss = (count-36000*hh-600*mm)/10;
+        long hh = count/36000;
+        long mm = (count%36000)/600;
+        long ss = (count-36000*hh-600*mm)/10;
         long th = (total+count)/36000;
         long tm = ((total+count)%36000)/600;
         long ts = ((total+count)-36000*th-600*tm)/10;
         timerButton.setText(String.format("%02d:%02d:%02d",hh,mm,ss));
         totalText.setText(String.format("%02d:%02d:%02d",th,tm,ts));
     }
+
 }
