@@ -35,6 +35,8 @@ public class TimerActivity extends AppCompatActivity {
         cCount = 0;
         total = 0;
 
+        final CountUpTimerC countUpTimerC = new CountUpTimerC(TimerActivity.this, total, cCount);
+
         startBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -44,8 +46,9 @@ public class TimerActivity extends AppCompatActivity {
                         timer.cancel();
                         timer = new Timer();
                     }
+
                     //Toast.makeText(TimerActivity.this, "enabled", Toast.LENGTH_SHORT).show();
-                    timer.schedule(new CountUpTimerC(TimerActivity.this, total, cCount),0,100);
+                    timer.schedule(countUpTimerC,0,100);
                 } else {
                     // The toggle is disabled
                     timer.cancel();
