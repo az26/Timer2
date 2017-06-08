@@ -14,7 +14,22 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TimerActivity extends AppCompatActivity {
-    private Timer timer = new Timer();
+    private Timer timer = new Timer(){
+        private CountUpTimerC timerTask;
+
+        @Override
+        public void schedule(TimerTask task, long delay, long period) {
+            super.schedule(task, delay, period);
+            this.timerTask = (CountUpTimerC)task;
+        }
+
+        @Override
+        public void cancel() {
+            super.cancel();
+            total = timerTask.getTotal();
+
+        }
+    };
     private long total,cCount,dCount;
 
     @Override
@@ -30,11 +45,11 @@ public class TimerActivity extends AppCompatActivity {
         ToggleButton dTimer = (ToggleButton) findViewById(R.id.dTimer);
         ToggleButton startBtn = (ToggleButton) findViewById(R.id.startButton);
 
+
         dTimer.setEnabled(false);
-        dCount= 50000;
+        dCount = 50000;
         cCount = 0;
         total = 0;
-
         final CountUpTimerC countUpTimerC = new CountUpTimerC(TimerActivity.this, total, cCount);
 
         startBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -48,7 +63,7 @@ public class TimerActivity extends AppCompatActivity {
                     }
 
                     //Toast.makeText(TimerActivity.this, "enabled", Toast.LENGTH_SHORT).show();
-                    timer.schedule(countUpTimerC,0,100);
+                    timer.schedule(new CountUpTimerC(TimerActivity.this, total, cCount), 0, 100);
                 } else {
                     // The toggle is disabled
                     timer.cancel();
