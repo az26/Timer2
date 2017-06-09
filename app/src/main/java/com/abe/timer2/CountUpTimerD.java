@@ -29,7 +29,7 @@ public class CountUpTimerD extends CountUpTimerC {
 
     @Override
     public void setCount() {
-        ((TimerActivity)context).setTotal(total);
+        ((TimerActivity)context).setTotal(saveTotal+count);
         ((TimerActivity)context).setdCount(count);
     }
 }

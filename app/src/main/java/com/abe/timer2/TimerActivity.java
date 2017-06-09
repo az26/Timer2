@@ -17,7 +17,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TimerActivity extends AppCompatActivity {
-    private Timer timer = new Timer(){
+    private Timer timer = new Timer()
+    /*{
         private CountUpTimerC timerTask;
 
         @Override
@@ -32,9 +33,11 @@ public class TimerActivity extends AppCompatActivity {
             timerTask.setCount();
             Toast.makeText(TimerActivity.this, "enabled", Toast.LENGTH_SHORT).show();
         }
-    };
+    }*/;
     private long total,cCount,dCount;
     private String dateText;
+    private CountUpTimerC c;
+    private CountUpTimerD d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,12 @@ public class TimerActivity extends AppCompatActivity {
         cCount = 0;
         total = 0;
 
+
         startBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            boolean b = false;
+            public void toast(){
+                Toast.makeText(TimerActivity.this, "enabled", Toast.LENGTH_SHORT).show();
+            }
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -63,7 +71,10 @@ public class TimerActivity extends AppCompatActivity {
                     if(total == 0){
                         dateText = new SimpleDateFormat("yyyy/MM/dd").format(new Date(System.currentTimeMillis()));
                     }
-                    timer.schedule(new CountUpTimerC(TimerActivity.this, total, cCount), 0, 100);
+                    if(b==true){
+                        d.cancel();
+                    }
+                    timer.schedule(c = new CountUpTimerC(TimerActivity.this, total, cCount), 0, 100);
                     //timer.schedule(new CountUpTimerC(TimerActivity.this, total, cCount), 0, 100);
 
 
@@ -73,15 +84,29 @@ public class TimerActivity extends AppCompatActivity {
                 } else {
                     // The toggle is disabled
 
+                    c.cancel();
+
+                    timer.schedule((d = new CountUpTimerD(TimerActivity.this, total, dCount)),0,100);
+                    b = true;
+                    //Toast.makeText(TimerActivity.this, ""+total, Toast.LENGTH_SHORT).show();
 
                     //timer.cancel();
-                    timer.purge();
-                    timer.schedule(new CountUpTimerD(TimerActivity.this, total, dCount),0,100);
-
-                    //timer = new Timer();
-                    //Toast.makeText(TimerActivity.this, "disabled", Toast.LENGTH_SHORT).show();
+                    //timer.purge();
                     //timer.schedule(new CountUpTimerD(TimerActivity.this, total, dCount),0,100);
-                    //cCount = 1;
+
+                    //Toast.makeText(TimerActivity.this, "disabled", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        cTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+                }else{
+
                 }
             }
         });
