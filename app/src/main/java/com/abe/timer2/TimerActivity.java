@@ -10,6 +10,9 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,11 +29,12 @@ public class TimerActivity extends AppCompatActivity {
         @Override
         public void cancel() {
             super.cancel();
-            total = timerTask.getTotal();
-
+            timerTask.setCount();
+            Toast.makeText(TimerActivity.this, "enabled", Toast.LENGTH_SHORT).show();
         }
     };
     private long total,cCount,dCount;
+    private String dateText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,30 +51,37 @@ public class TimerActivity extends AppCompatActivity {
 
 
         dTimer.setEnabled(false);
-        dCount = 50000;
+        dCount = 0;
         cCount = 0;
         total = 0;
-        final CountUpTimerC countUpTimerC = new CountUpTimerC(TimerActivity.this, total, cCount);
 
         startBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // The toggle is enabled
-                    if(cCount >= 1){
-                        timer.cancel();
-                        timer = new Timer();
+                    if(total == 0){
+                        dateText = new SimpleDateFormat("yyyy/MM/dd").format(new Date(System.currentTimeMillis()));
                     }
+                    timer.schedule(new CountUpTimerC(TimerActivity.this, total, cCount), 0, 100);
+                    //timer.schedule(new CountUpTimerC(TimerActivity.this, total, cCount), 0, 100);
+
+
 
                     //Toast.makeText(TimerActivity.this, "enabled", Toast.LENGTH_SHORT).show();
-                    timer.schedule(new CountUpTimerC(TimerActivity.this, total, cCount), 0, 100);
+
                 } else {
                     // The toggle is disabled
-                    timer.cancel();
-                    timer = new Timer();
-                    //Toast.makeText(TimerActivity.this, "disabled", Toast.LENGTH_SHORT).show();
+
+
+                    //timer.cancel();
+                    timer.purge();
                     timer.schedule(new CountUpTimerD(TimerActivity.this, total, dCount),0,100);
-                    cCount = 1;
+
+                    //timer = new Timer();
+                    //Toast.makeText(TimerActivity.this, "disabled", Toast.LENGTH_SHORT).show();
+                    //timer.schedule(new CountUpTimerD(TimerActivity.this, total, dCount),0,100);
+                    //cCount = 1;
                 }
             }
         });
@@ -116,4 +127,9 @@ public class TimerActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void setTotal(long set){total = set;}
+    public void setcCount(long set){cCount = set;}
+    public void setdCount(long set){dCount = set;}
+
 }

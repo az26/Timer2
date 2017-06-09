@@ -58,8 +58,10 @@ public class CountUpTimerC extends TimerTask{
         totalText.setText(String.format("%02d:%02d:%02d",th,tm,ts));
     }
 
-    public long getTotal(){return total;}
-    public long getCount(){return count;}
+    public void setCount(){
+        ((TimerActivity)context).setTotal(total);
+        ((TimerActivity)context).setcCount(count);
+    }
 
 
 }
